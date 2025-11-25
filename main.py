@@ -49,7 +49,7 @@ def create_enemies():
     aliens = []    
     for x in range(0, 400, 50):
         for y in range(0, 200, 50):
-            alien=Enemy(20,20,pygame.image.load("Space Invaders\SI_enemy1.jpg"),50,50)
+            alien=Enemy(20,20,pygame.image.load("Images\SI_enemy1.jpg"),50,50)
             alien.image = pygame.transform.scale(alien.image, (50, 50))
             aliens.append(alien)
             screen.blit(alien.image, (x, y))
@@ -82,7 +82,7 @@ while running:
     
     
     ##player character creation
-    player_image=pygame.image.load("Space Invaders\SI_player.png")
+    player_image=pygame.image.load("Images\SI_player.png")
     player_image = pygame.transform.scale(player_image, (175, 50))
     screen.blit(player_image, (player_x, 450))   
 
@@ -93,7 +93,7 @@ while running:
         player_x-=5
     
     ##enemy character creation
-    enemy1_image=pygame.image.load("Space Invaders\SI_enemy1.jpg")
+    enemy1_image=pygame.image.load("Images\SI_enemy1.jpg")
     enemy1_image = pygame.transform.scale(enemy1_image, (75,60))
 
 
