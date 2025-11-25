@@ -1,0 +1,112 @@
+#%reset -f
+
+##setup
+import pygame 
+pygame.init()
+pygame.key.set_repeat(100,100)
+screen = pygame.display.set_mode([500,500])
+screen.fill([0,0,0]) # black background
+
+##variable decleration
+player_x = 175
+enemy_x=-1
+enemy_y=20
+
+##enemy class creation
+class Enemy:
+    def __init__(self,x,y,image,length,height):
+        self.x=x
+        self.y=y
+        self.image=image
+        self.length=length
+        self.height=height
+        self.move_right=True
+        self.move_left=False
+    
+    ##enemy move function
+    def move_enemies(self):
+        if self.x>425:
+            self.move_right=False
+            self.move_left=True
+            self.y+=10
+        elif self.x<0:
+            self.move_right=True
+            self.move_left=False
+            self.y+=10
+        if self.move_right==True:
+            self.x+=5
+            pygame.time.wait(100) 
+        elif self.move_left==True:
+            self.x-=5
+            pygame.time.wait(100) 
+
+
+
+
+
+#enemy array creation fucntion
+def create_enemies():
+    aliens = []    
+    for x in range(0, 400, 50):
+        for y in range(0, 200, 50):
+            alien=Enemy(20,20,pygame.image.load("Space Invaders\SI_enemy1.jpg"),50,50)
+            alien.image = pygame.transform.scale(alien.image, (50, 50))
+            aliens.append(alien)
+            screen.blit(alien.image, (x, y))
+    return aliens
+
+aliens = create_enemies()  
+
+#def move_enemies(aliens):
+#    for alien in aliens:
+#        alien.move()
+#        # alien.draw()
+#        screen.blit(alien.image, (alien.y, alien.x))
+
+##game running
+running = True
+while running: 
+    ##user interaction
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                print("Left arrow key pressed")
+                player_x -= 5
+            if event.key == pygame.K_RIGHT:
+                print("Right arrow key pressed")
+                player_x += 5
+            elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
+                running = False
+    
+    
+    ##player character creation
+    player_image=pygame.image.load("Space Invaders\SI_player.png")
+    player_image = pygame.transform.scale(player_image, (175, 50))
+    screen.blit(player_image, (player_x, 450))   
+
+    ##player boundry detection
+    if player_x<-60:
+        player_x+=5
+    if player_x>385:
+        player_x-=5
+    
+    ##enemy character creation
+    enemy1_image=pygame.image.load("Space Invaders\SI_enemy1.jpg")
+    enemy1_image = pygame.transform.scale(enemy1_image, (75,60))
+
+
+    
+    #move_enemies(aliens)
+
+    
+    ##update screen
+    pygame.display.flip()
+
+
+pygame.quit()
+pygame.display.quit()
+#del screen  
+
+
