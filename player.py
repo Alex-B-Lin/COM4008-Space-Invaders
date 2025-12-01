@@ -1,8 +1,17 @@
-<<<<<<< HEAD:player.py
+
+#%reset -f
+
+##imorts
+import pygame 
+from bullet_class import Bullet
+from enemy_class import Enemy
+
+##setup
 #%reset -f
 
 ##setup
 import pygame 
+
 pygame.init()
 pygame.key.set_repeat(100,100)
 screen = pygame.display.set_mode([500,500])
@@ -20,33 +29,7 @@ player_x = 175
 #enemy_x=-1
 #enemy_y=20
 
-##enemy class creation
-#class Enemy:
-#    def __init__(self,x,y,image,length,height):
-#        self.x=x
-#        self.y=y
-#        self.image=image
-#        self.length=length
-#        self.height=height
-#        self.move_right=True
-#        self.move_left=False
-#    
-#    ##enemy move function
-#    def move_enemies(self):
-#        if self.x>425:
-#            self.move_right=False
-#            self.move_left=True
-#            self.y+=10
-#        elif self.x<0:
-#            self.move_right=True
-#            self.move_left=False
-#            self.y+=10
-#        if self.move_right==True:
-#            self.x+=5
-#            pygame.time.wait(100) 
-#        elif self.move_left==True:
-#            self.x-=5
-#            pygame.time.wait(100) 
+
 
 
 
@@ -78,25 +61,6 @@ def player_creation():
     screen.blit(player_image, (player_x, PLAYER_Y))   
 
 
-##Bullet class
-class Bullet:
-    def __init__(self,x,y,bullet_image,length,height,screen):
-        self.x=x
-        self.y=y
-        self.bullet_image=bullet_image
-        self.length=length
-        self.height=height
-        self.screen=screen
-
-        self.bullet_image=pygame.image.load(bullet_image)
-        self.bullet_image = pygame.transform.scale(self.bullet_image, (30, 30))
-    
-    def bullet_move(self):
-        while self.y>0:
-            self.y-=10
-            pygame.display.update()
-            screen.blit(self.bullet_image, (self.x+73,self.y))
-            pygame.time.wait(500)
 
 
 
@@ -122,7 +86,12 @@ while running:
             elif event.key == pygame.K_RIGHT:
                 print("Right arrow key pressed")
                 player_x += 5
-            elif event.key == pygame.K_SPACE:
+
+            elif pygame.key.get_pressed()[pygame.K_SPACE]:
+                print("Space key pressed")
+                player_shoot()
+                pygame.time.wait(500)
+            elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
                 print("Space key pressed")
                 player_shoot()
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
@@ -135,7 +104,6 @@ while running:
     
     
     
-
     
     
     ##enemy character creation
