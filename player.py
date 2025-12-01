@@ -1,6 +1,3 @@
-
-#%reset -f
-
 ##imorts
 import pygame 
 from bullet_class import Bullet
@@ -10,8 +7,6 @@ from enemy_class import Enemy
 #%reset -f
 
 ##setup
-import pygame 
-
 pygame.init()
 pygame.key.set_repeat(100,100)
 screen = pygame.display.set_mode([500,500])
@@ -20,20 +15,10 @@ screen.fill([0,0,0]) # black background
 ##constant variable deleration
 PLAYER_Y=450
 
-
-
-
-
 ##variable decleration
 player_x = 175
 #enemy_x=-1
 #enemy_y=20
-
-
-
-
-
-
 
 #enemy array creation fucntion
 #def create_enemies():
@@ -60,16 +45,10 @@ def player_creation():
     player_image = pygame.transform.scale(player_image, (175, 50))
     screen.blit(player_image, (player_x, PLAYER_Y))   
 
-
-
-
-
 ##player shoot function
 def player_shoot():
-    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet.png",100,100,screen)
+    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
     bullet.bullet_move()
-
-
 
 ##game running
 running = True
@@ -86,7 +65,6 @@ while running:
             elif event.key == pygame.K_RIGHT:
                 print("Right arrow key pressed")
                 player_x += 5
-
             elif pygame.key.get_pressed()[pygame.K_SPACE]:
                 print("Space key pressed")
                 player_shoot()
@@ -109,12 +87,7 @@ while running:
     ##enemy character creation
     #enemy1_image=pygame.image.load("Images\SI_enemy1.jpg")
     #enemy1_image = pygame.transform.scale(enemy1_image, (75,60))
-
-
-    
     #move_enemies(aliens)
-
-    
     ##update screen
     pygame.display.flip()
 
