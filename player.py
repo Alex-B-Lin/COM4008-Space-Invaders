@@ -1,3 +1,4 @@
+
 #%reset -f
 
 ##imorts
@@ -6,6 +7,11 @@ from bullet_class import Bullet
 from enemy_class import Enemy
 
 ##setup
+#%reset -f
+
+##setup
+import pygame 
+
 pygame.init()
 pygame.key.set_repeat(100,100)
 screen = pygame.display.set_mode([500,500])
@@ -22,6 +28,7 @@ PLAYER_Y=450
 player_x = 175
 #enemy_x=-1
 #enemy_y=20
+
 
 
 
@@ -56,6 +63,7 @@ def player_creation():
 
 
 
+
 ##player shoot function
 def player_shoot():
     bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet.png",100,100,screen)
@@ -78,10 +86,14 @@ while running:
             elif event.key == pygame.K_RIGHT:
                 print("Right arrow key pressed")
                 player_x += 5
+
             elif pygame.key.get_pressed()[pygame.K_SPACE]:
                 print("Space key pressed")
                 player_shoot()
                 pygame.time.wait(500)
+            elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                print("Space key pressed")
+                player_shoot()
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
                 running = False
     ##player boundry detection 
@@ -92,7 +104,6 @@ while running:
     
     
     
-
     
     
     ##enemy character creation
