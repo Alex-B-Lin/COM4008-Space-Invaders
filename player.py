@@ -49,6 +49,10 @@ def player_creation():
 def player_shoot():
     bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
     bullet.bullet_move()
+    return bullet
+
+bullet=None
+bullet_list=[]
 
 ##game running
 running = True
@@ -67,8 +71,10 @@ while running:
                 player_x += 5
             elif pygame.key.get_pressed()[pygame.K_SPACE]:
                 print("Space key pressed")
-                player_shoot()
-                pygame.time.wait(500)
+                bullet = player_shoot()
+                # bullet_list.append(bullet)
+                # bullet_list = player_shoot()
+                # print(bullet_list)
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
                 running = False
     ##player boundry detection 
@@ -76,6 +82,13 @@ while running:
         player_x+=5
     elif player_x>385:
         player_x-=5
+    
+    ##bullet boundry detection
+    if bullet:
+        bullet.bullet_move()
+        if bullet.y<=-30:
+            bullet=None
+    
     
     
     
