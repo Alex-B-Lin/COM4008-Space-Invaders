@@ -69,9 +69,6 @@ while running:
                 print("Space key pressed")
                 player_shoot()
                 pygame.time.wait(500)
-            elif pygame.key.get_pressed()[pygame.K_ESCAPE]:
-                print("Space key pressed")
-                player_shoot()
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
                 running = False
     ##player boundry detection 

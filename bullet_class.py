@@ -4,6 +4,7 @@ pygame.key.set_repeat(100,100)
 screen = pygame.display.set_mode([500,500])
 screen.fill([0,0,0])
 ##Bullet class
+
 class Bullet:
     def __init__(self,x,y,bullet_image,length,height,screen):
         self.x=x
@@ -21,4 +22,4 @@ class Bullet:
             self.y-=10
             pygame.display.flip()
             screen.blit(self.bullet_image, (self.x+78,self.y-12))
-            pygame.time.wait(10)
+            pygame.time.wait(20)
