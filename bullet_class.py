@@ -20,6 +20,6 @@ class Bullet:
     def bullet_move(self):
         for i in range(48):
             self.y-=10
-            pygame.display.flip()
-            screen.blit(self.bullet_image, (self.x+78,self.y-12))
-            pygame.time.wait(20)
+            pygame.display.update()
+            screen.blit(self.bullet_image, (self.x+73,self.y))
+            pygame.time.wait(10)
