@@ -18,6 +18,7 @@ PLAYER_Y=450
 
 ##variable decleration
 player_x = 175
+player_lives=3
 #enemy_x=-1
 #enemy_y=20
 
@@ -68,13 +69,19 @@ running = True
 while running: 
     screen.fill([0,0,0]) # clear screen each frame
     player_creation()
+
     ##player rectable creation
     player_rect=pygame.Rect(player_x+60, PLAYER_Y, 60, 45)
-    test_player_rect=pygame.draw.rect(screen, colour, pygame.Rect(350, 495, 60, 60))
+    test_player_rect=pygame.draw.rect(screen, colour, pygame.Rect(350, 450, 60, 60))
     if player_rect.colliderect(test_player_rect):
         print("collision detected")
-
-
+        player_lives-=1
+        print(f"{player_lives} lives remaining")
+        player_x=175
+        player_rect.update(player_x+60, PLAYER_Y, 175, 50)
+    if player_lives==0:
+        print("Game Over")
+        running=False
 
 
     ##user interaction
