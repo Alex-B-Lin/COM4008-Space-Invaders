@@ -9,8 +9,9 @@ from enemy_class import Enemy
 ##setup
 pygame.init()
 pygame.key.set_repeat(100,100)
-screen = pygame.display.set_mode([500,500])
+screen = pygame.display.set_mode((500,500))
 screen.fill([0,0,0]) # black background
+colour = (255, 0, 0)
 
 ##constant variable deleration
 PLAYER_Y=450
@@ -45,19 +46,37 @@ def player_creation():
     player_image = pygame.transform.scale(player_image, (175, 50))
     screen.blit(player_image, (player_x, PLAYER_Y))   
 
-##player shoot function
-def player_shoot():
-    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
-    bullet.bullet_move()
-    return bullet
+
+
+
+
 
 bullet=None
 bullet_list=[]
 
+
+##player shoot function
+def player_shoot():
+    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
+    bullet_list.append(bullet)
+    return bullet
+
+
+
 ##game running
 running = True
 while running: 
+    screen.fill([0,0,0]) # clear screen each frame
     player_creation()
+    ##player rectable creation
+    player_rect=pygame.Rect(player_x+60, PLAYER_Y, 60, 45)
+    test_player_rect=pygame.draw.rect(screen, colour, pygame.Rect(350, 495, 60, 60))
+    if player_rect.colliderect(test_player_rect):
+        print("collision detected")
+
+
+
+
     ##user interaction
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -66,28 +85,34 @@ while running:
             if event.key == pygame.K_LEFT:
                 print("Left arrow key pressed")
                 player_x -= 5
+                player_rect.update(player_x, PLAYER_Y, 175, 50)
             elif event.key == pygame.K_RIGHT:
                 print("Right arrow key pressed")
                 player_x += 5
-            elif pygame.key.get_pressed()[pygame.K_SPACE]:
+                player_rect.update(player_x, PLAYER_Y, 175, 50)
+            elif event.key == pygame.K_SPACE:
                 print("Space key pressed")
                 bullet = player_shoot()
                 # bullet_list.append(bullet)
                 # bullet_list = player_shoot()
-                # print(bullet_list)
+                print(bullet_list)
+                
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
                 running = False
     ##player boundry detection 
     if player_x<-60:
         player_x+=5
+        player_rect.update(player_x, PLAYER_Y, 175, 50)
     elif player_x>385:
         player_x-=5
+        player_rect.update(player_x, PLAYER_Y, 175, 50)
     
     ##bullet boundry detection
-    if bullet:
+    if bullet in bullet_list:
         bullet.bullet_move()
         if bullet.y<=-30:
-            bullet=None
+            bullet_list.remove(bullet)
+    
     
     
     
