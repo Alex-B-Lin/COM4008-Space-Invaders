@@ -18,9 +18,8 @@ class Bullet:
         self.bullet_image = pygame.transform.scale(self.bullet_image, (20, 60))
     
     def bullet_move(self):
-        self.y-=10
+        self.y -= 0.5
         print(self.y)
-        pygame.display.update()
-        screen.blit(self.bullet_image, (self.x+73,self.y))
-        pygame.time.wait(10)
+        # Draw bullet on the screen
+        self.screen.blit(self.bullet_image, (self.x+73, self.y))
 

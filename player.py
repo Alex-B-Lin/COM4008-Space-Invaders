@@ -19,6 +19,8 @@ PLAYER_Y=450
 ##variable decleration
 player_x = 175
 player_lives=3
+bullet=None
+bullet_list=[]
 #enemy_x=-1
 #enemy_y=20
 
@@ -48,31 +50,23 @@ def player_creation():
     screen.blit(player_image, (player_x, PLAYER_Y))   
 
 
-
-
-
-
-bullet=None
-bullet_list=[]
-
-
 ##player shoot function
 def player_shoot():
     bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
     bullet_list.append(bullet)
     return bullet
 
-
-
 ##game running
 running = True
 while running: 
-    screen.fill([0,0,0]) # clear screen each frame
+    screen.fill([0,0,0])
     player_creation()
 
     ##player rectable creation
     player_rect=pygame.Rect(player_x+60, PLAYER_Y, 60, 45)
     test_player_rect=pygame.draw.rect(screen, colour, pygame.Rect(350, 450, 60, 60))
+    
+    ##player collision detection
     if player_rect.colliderect(test_player_rect):
         print("collision detected")
         player_lives-=1
@@ -82,8 +76,7 @@ while running:
     if player_lives==0:
         print("Game Over")
         running=False
-
-
+    
     ##user interaction
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -100,8 +93,6 @@ while running:
             elif event.key == pygame.K_SPACE:
                 print("Space key pressed")
                 bullet = player_shoot()
-                # bullet_list.append(bullet)
-                # bullet_list = player_shoot()
                 print(bullet_list)
                 
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
@@ -114,16 +105,16 @@ while running:
         player_x-=5
         player_rect.update(player_x, PLAYER_Y, 175, 50)
     
-    ##bullet boundry detection
-    if bullet in bullet_list:
+    ##bullet movement and boundry detection
+    bullets_to_remove = []
+    for bullet in bullet_list:
         bullet.bullet_move()
-        if bullet.y<=-30:
-            bullet_list.remove(bullet)
+        if bullet.y <= -30:
+            bullets_to_remove.append(bullet)
     
-    
-    
-    
-    
+    ##bullet list removal
+    for bullet in bullets_to_remove:
+        bullet_list.remove(bullet)
     
     
     ##enemy character creation
