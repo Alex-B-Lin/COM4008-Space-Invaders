@@ -4,9 +4,6 @@ from bullet_class import Bullet
 from enemy_class import Enemy
 
 ##setup
-#%reset -f
-
-##setup
 pygame.init()
 pygame.key.set_repeat(100,100)
 screen = pygame.display.set_mode((500,500))
@@ -21,27 +18,6 @@ player_x = 175
 player_lives=3
 bullet=None
 bullet_list=[]
-#enemy_x=-1
-#enemy_y=20
-
-#enemy array creation fucntion
-#def create_enemies():
-#    aliens = []    
-#    for x in range(0, 400, 50):
-#        for y in range(0, 200, 50):
-#            alien=Enemy(20,20,pygame.image.load("Images\SI_enemy1.jpg"),50,50)
-#            alien.image = pygame.transform.scale(alien.image, (50, 50))
-#            aliens.append(alien)
-#            screen.blit(alien.image, (x, y))
-#    return aliens
-
-#aliens = create_enemies()  
-
-#def move_enemies(aliens):
-#    for alien in aliens:
-#        alien.move()
-#        # alien.draw()
-#        screen.blit(alien.image, (alien.y, alien.x))
 
 ##player character creation fucntion
 def player_creation():
@@ -52,7 +28,7 @@ def player_creation():
 
 ##player shoot function
 def player_shoot():
-    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,10,screen)
+    bullet=Bullet(player_x,PLAYER_Y,"Images\SI_bullet_test.jpg",10,30,screen,pygame.Rect(player_x,PLAYER_Y,20,60))
     bullet_list.append(bullet)
     return bullet
 
@@ -62,9 +38,22 @@ while running:
     screen.fill([0,0,0])
     player_creation()
 
-    ##player rectable creation
+    ##rectangle creation
     player_rect=pygame.Rect(player_x+60, PLAYER_Y, 60, 45)
     test_player_rect=pygame.draw.rect(screen, colour, pygame.Rect(350, 450, 60, 60))
+    test_bullet_rect=pygame.draw.rect(screen, colour, pygame.Rect(150, 150, 60, 60))
+
+    ##bullet movement and boundry detection
+    bullets_to_remove = []
+    for bullet in bullet_list:
+        bullet.bullet_move()
+        if bullet.y <= -30:
+            bullets_to_remove.append(bullet)
+
+        # check collision between this bullet's rect and the test target
+        if bullet.rect.colliderect(test_bullet_rect):
+            print("Bullet collision detected")
+            bullets_to_remove.append(bullet)
     
     ##player collision detection
     if player_rect.colliderect(test_player_rect):
@@ -93,7 +82,6 @@ while running:
             elif event.key == pygame.K_SPACE:
                 print("Space key pressed")
                 bullet = player_shoot()
-                print(bullet_list)
                 
             elif event.key == pygame.K_ESCAPE or event.key == pygame.WINDOWCLOSE: # TO QUIT
                 running = False
@@ -105,28 +93,15 @@ while running:
         player_x-=5
         player_rect.update(player_x, PLAYER_Y, 175, 50)
     
-    ##bullet movement and boundry detection
-    bullets_to_remove = []
-    for bullet in bullet_list:
-        bullet.bullet_move()
-        if bullet.y <= -30:
-            bullets_to_remove.append(bullet)
-    
     ##bullet list removal
     for bullet in bullets_to_remove:
-        bullet_list.remove(bullet)
+        if bullet in bullet_list:
+            bullet_list.remove(bullet)
     
     
-    ##enemy character creation
-    #enemy1_image=pygame.image.load("Images\SI_enemy1.jpg")
-    #enemy1_image = pygame.transform.scale(enemy1_image, (75,60))
-    #move_enemies(aliens)
-    ##update screen
+
     pygame.display.flip()
 
 
 pygame.quit()
 pygame.display.quit()
-#del screen  
-
-
